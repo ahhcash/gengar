@@ -12,7 +12,7 @@ type Document struct {
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 
-	PrivateKey []byte
+	Ciphertext []byte `json:"ciphertext"`
 }
 
 type DocumentMetadata struct {

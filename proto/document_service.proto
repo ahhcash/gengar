@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package document;
+
+option go_package = "github.com/ahhcash/gengar/proto";
+
+service DocumentService {
+  rpc UploadDocument(UploadRequest) returns (UploadResponse);
+  rpc DownloadDocument(DownloadRequest) returns (DownloadResponse);
+  rpc ListDocuments(Empty) returns (ListResponse);
+}
+
+message Empty {}
+
+message DocumentMetadata {
+  string id = 1;
+  string name = 2;
+  string created_at = 3;
+  string updated_at = 4;
+}
+
+message UploadRequest {
+  string name = 1;
+  bytes content = 2;
+  bytes client_public_key = 3;
+}
+
+message UploadResponse {
+  string document_id = 1;
+}
+
+message DownloadRequest {
+  string document_id = 1;
+}
+
+message DownloadResponse {
+  DocumentMetadata metadata = 1;
+  bytes encrypted_content = 2;
+  bytes ciphertext = 3;
+}
+
+message ListResponse {
+  repeated DocumentMetadata documents = 1;
+}
