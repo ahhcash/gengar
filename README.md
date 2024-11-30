@@ -5,23 +5,30 @@
 ### Project Structure
 
 ```
+├── Makefile
 ├── README.md
 ├── cmd
 │   ├── client
 │   │   └── main.go
 │   └── server
-│       └── main.go
+│       ├── main.go
+│       └── store.go
 ├── go.mod
 ├── go.sum
-└── internal
-├── crypto
-│   ├── encryptor.go
-│   └── kyber.go
-└── types
-└── document.go
+├── internal
+│   ├── crypto
+│   │   ├── encryptor.go
+│   │   └── kyber.go
+│   └── types
+│       └── document.go
+└── proto
+    ├── document_service.proto
+    └── generated
+        └── proto
+            ├── document_service.pb.go
+            └── document_service_grpc.pb.go
 
-7 directories, 8 files
-****
+10 directories, 13 files
 ```
 
 #### TODO:
