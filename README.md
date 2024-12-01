@@ -5,13 +5,16 @@
 ### Project Structure
 
 ```
+.
 ├── Makefile
 ├── README.md
 ├── cmd
 │   ├── client
+│   │   ├── client.go
 │   │   └── main.go
 │   └── server
 │       ├── main.go
+│       ├── server.go
 │       └── store.go
 ├── go.mod
 ├── go.sum
@@ -22,13 +25,10 @@
 │   └── types
 │       └── document.go
 └── proto
-    ├── document_service.proto
-    └── generated
-        └── proto
-            ├── document_service.pb.go
-            └── document_service_grpc.pb.go
+    └── document_service.proto
 
-10 directories, 13 files
+8 directories, 13 files
+
 ```
 
 #### TODO:
