@@ -1,5 +1,7 @@
 # Gengar - Document storage and retrieval using CRYSTALS Kyber encryption
 
+![GitHub Actions](https://github.com/ahhcash/gengar/actions/workflows/build.yml/badge.svg)
+
 > #### Information Security and Privacy - Assignment 3.2
 
 ### Project Structure
@@ -34,5 +36,4 @@
 #### TODO:
 - [ ] Documentation
 - [x] Client and server implementations
-- [ ] Unit tests? (maybe)
 - [x] Figure out proper decryption
