@@ -19,6 +19,11 @@ jobs:
           go-version: '1.23'
           cache: true
 
+      - name: set up go environment
+        run: |
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+          go env
+
       - name: install build dependencies
         run: |
           sudo apt-get update
@@ -40,19 +45,24 @@ jobs:
       - name: install protoc for protobuf generation
         uses: arduino/setup-protoc@v3
 
-      - name: Installing protoc-gen-go
+      - name: install protoc-gen-go
         run: |
-          go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
-          go get google.golang.org/protobuf/cmd/protoc-gen-go
-          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+          # catch any errors here before we move to generation
+          which protoc-gen-go
+          which protoc-gen-go-grpc
+
       - name: generate proto stubs
         run: |
           make proto
           # let's verify just in case
           ls -la proto/generated
 
-      - name: tidy go.mod
-        run: go mod tidy
+      - name: tidy and verify go.mod
+        run: |
+          go mod tidy
+          go mod verify
 
       - name: build client and server
         run: make build
