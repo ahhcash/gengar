@@ -42,8 +42,7 @@ jobs:
 
       - name: Installing protoc-gen-go
         run: |
-          go mod tidy
-          go install github.com/golang/protobuf/protoc-gen-go
+          go install google.golang.org/protobuf/protoc-gen-go
           go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
       - name: generate proto stubs
@@ -51,6 +50,9 @@ jobs:
           make proto
           # let's verify just in case
           ls -la proto/generated
+
+      - name: tidy go.mod
+        run: go mod tidy
 
       - name: build client and server
         run: make build
