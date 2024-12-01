@@ -97,3 +97,7 @@ func (e *DocEncryptor) Decrypt(doc *types.Document) error {
 
 	return nil
 }
+
+func (e *DocEncryptor) GetKeyPair() *KeyPair {
+	return e.keyPair
+}
