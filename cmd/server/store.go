@@ -73,3 +73,9 @@ func (ds *DocumentStore) List() []*types.DocumentMetadata {
 
 	return metadata
 }
+
+func (ds *DocumentStore) Clean() {
+	if ds.encryptor != nil {
+		ds.encryptor.Clean()
+	}
+}

@@ -8,6 +8,9 @@ import (
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
 	"net"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 type DocumentServer struct {
@@ -81,6 +84,7 @@ func Run(port int) error {
 	if err != nil {
 		return fmt.Errorf("failed to initiaslize document stpre")
 	}
+	defer documnetStore.Clean()
 
 	list, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
@@ -90,6 +94,14 @@ func Run(port int) error {
 	pb.RegisterDocumentServiceServer(grpcServer, &DocumentServer{
 		store: documnetStore,
 	})
+
+	go func() {
+		// capture any interrupts and other signals
+		sigCh := make(chan os.Signal, 1)
+		signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
+		<-sigCh
+		grpcServer.GracefulStop()
+	}()
 
 	if err := grpcServer.Serve(list); err != nil {
 		return fmt.Errorf("failed to serve on port %d: %v", port, err)
