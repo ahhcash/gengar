@@ -1,7 +1,6 @@
-# Gengar
-### Document storage and retrieval using Kyber post quantum encryption
+# Gengar &nbsp; ![GitHub Actions](https://github.com/ahhcash/gengar/actions/workflows/build.yml/badge.svg)
 
-![GitHub Actions](https://github.com/ahhcash/gengar/actions/workflows/build.yml/badge.svg)
+### Document storage and retrieval using Kyber post quantum encryption
 
 > #### Information Security and Privacy - Assignment 3.2
 
@@ -31,7 +30,7 @@
 
 8 directories, 13 files
 ```
-### Overview
+### Overview.
 This project is a proof of concept for Kyber 768 encryption in a (simulated) cloud storage system that performs document storage and retrieval. The project is built using [OQS' Go port of Kyber](https://github.com/open-quantum-safe/liboqs-go) library and the [gRPC](https://grpc.io/) framework.
 
 ##### What is Kyber?
@@ -57,7 +56,7 @@ The server is a gRPC service that implements the same operations:
 - View an encrypted document
 - Exit
 
-### Instructions:
+### Instructions.
 
 #### 1. Setting up `liboqs`
  The [liboqs-go README](https://github.com/open-quantum-safe/liboqs-go#installation) has instructions on how to install `liboqs` on your system. Make sure the `.config` directory in `liboqs-go` has the `LIBOQS_INCLUDE_DIR` and `LIBOQS_LIB_DIR` variables set to the location of `liboqs` headers and libraries on your system, since they're dynamically linked (`liboqs-go` internally uses CGO to link to `liboqs`).
