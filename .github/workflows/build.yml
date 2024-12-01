@@ -1,0 +1,44 @@
+name: GitHub Actions
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout to repo
+        uses: actions/checkout@v4
+
+      - name: set up go
+        uses: actions/setup-go@v5.1.0
+        with:
+          go-version: '1.23'
+          cache: true
+
+      - name: install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake gcc ninja-build
+
+      - name: install and build liboqs # same steps the liboqs-go README
+        run: |
+          git clone --depth=1 https://github.com/open-quantum-safe/liboqs
+          cmake -S liboqs -B liboqs/build -DBUILD_SHARED_LIBS=ON
+          cmake --build liboqs/build --parallel $(nproc)
+          sudo cmake --build liboqs/build --target install
+          sudo ldconfig
+
+      - name: set up liboqs-go
+        run: |
+          git clone --depth=1 https://github.com/open-quantum-safe/liboqs-go
+          echo "PKG_CONFIG_PATH=$GITHUB_WORKSPACE/liboqs-go/.config" >> $GITHUB_ENV
+
+      - name: install protoc for protobuf generation
+        uses: arduino/setup-protoc@v3
+
+      - name: run make target
+        run: make all

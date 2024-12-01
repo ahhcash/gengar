@@ -1,6 +1,7 @@
-.PHONY: proto clean server client build
+.PHONY: all clean proto build
 
-# Build targets
+all: clean proto build
+
 proto:
 	mkdir -p proto/generated
 	protoc --go_out=./proto/generated --go_opt=paths=source_relative --go-grpc_out=./proto/generated/ --go-grpc_opt=paths=source_relative proto/document_service.proto
@@ -10,15 +11,12 @@ build:
 	go build -o bin/server cmd/server/*.go
 	go build -o bin/client cmd/client/*.go
 
-# Clean targets
 clean:
 	rm -rf proto/generated
 	rm -rf bin/
 
-# Server target
 server:
 	go run cmd/server/*.go -port 50051
 
-# Interactive client target
 client:
 	go run cmd/client/*.go -server localhost:50051
