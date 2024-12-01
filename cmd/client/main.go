@@ -15,17 +15,16 @@ func printHelp() {
 	fmt.Println("⬇️  download <id> <filename> - Download a document")
 	fmt.Println("📝 list                     - List all documents")
 	fmt.Println("🙏 help                     - Show this help message")
-	fmt.Println("👋 exit                     - Exit the program\n")
+	fmt.Println("👋 exit                     - Exit the program")
 }
 
 func main() {
 	serverAddr := flag.String("server", "localhost:50051", "The server address in the format host:port")
 	flag.Parse()
 
-	// Create client
 	docClient, err := NewDocumentClient(*serverAddr)
 	if err != nil {
-		log.Fatalf("☠️  Failed to create client: %v", err)
+		log.Fatalf("☠️  Failed to connect to server, is it running?  %v", err)
 	}
 	defer docClient.Close()
 
@@ -67,7 +66,7 @@ func main() {
 
 		case "download":
 			if len(cmd) != 3 {
-				fmt.Println("Usage: download <id> <filename>")
+				fmt.Println("Usage: download <id> <filename to save to>")
 				fmt.Print("> ")
 				continue
 			}

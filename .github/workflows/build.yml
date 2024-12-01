@@ -57,7 +57,7 @@ jobs:
         run: |
           make proto
           # let's verify just in case
-          ls -la proto/generated
+          ls -la proto/generated/proto
 
       - name: tidy and verify go.mod
         run: |
