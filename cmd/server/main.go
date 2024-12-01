@@ -11,6 +11,6 @@ func main() {
 
 	log.Printf("🏃‍♂️‍➡️ starting server on port %d", *port)
 	if err := Run(*port); err != nil {
-		log.Fatalf("☠️ server error: %v", err)
+		log.Fatalf("☠️ Failed to start the server: %v", err)
 	}
 }

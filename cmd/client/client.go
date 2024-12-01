@@ -33,9 +33,21 @@ func NewDocumentClient(serverAddr string) (*DocumentClient, error) {
 		return nil, fmt.Errorf("could not initialize encryptor for grpc client: %v", err)
 	}
 
+	client := pb.NewDocumentServiceClient(conn)
+
+	// is the server even running lol
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	_, err = client.ListDocuments(ctx, &pb.Empty{})
+	if err != nil {
+		_ = conn.Close()
+		return nil, fmt.Errorf("could not connect to server: %v", err)
+	}
+
 	return &DocumentClient{
 		conn:      conn,
-		client:    pb.NewDocumentServiceClient(conn),
+		client:    client,
 		encryptor: encryptor,
 	}, nil
 }
