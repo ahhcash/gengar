@@ -12,7 +12,7 @@ type KyberWrapper struct {
 }
 
 type KeyPair struct {
-	publicKey  []byte
+	PublicKey  []byte
 	privateKey []byte
 }
 
@@ -44,7 +44,7 @@ func (k *KyberWrapper) GenerateKeyPair() (*KeyPair, error) {
 
 	privateKey := k.kem.ExportSecretKey()
 	return &KeyPair{
-		publicKey:  publicKey,
+		PublicKey:  publicKey,
 		privateKey: privateKey,
 	}, nil
 }
