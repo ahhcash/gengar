@@ -33,6 +33,6 @@
 
 #### TODO:
 - [ ] Documentation
-- [ ] Client and server implementations
+- [x] Client and server implementations
 - [ ] Unit tests? (maybe)
-- [ ] Figure out proper decryption
+- [x] Figure out proper decryption

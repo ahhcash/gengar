@@ -34,7 +34,6 @@ func NewDocEncryptor(kemType string) (*DocEncryptor, error) {
 
 func (e *DocEncryptor) Encrypt(doc *types.Document, publicKey []byte) error {
 	ciphertext, sharedSecret, err := e.kyber.EncapsulateSecret(publicKey)
-	defer e.kyber.Clean()
 
 	if err != nil {
 		return err
@@ -65,7 +64,6 @@ func (e *DocEncryptor) Encrypt(doc *types.Document, publicKey []byte) error {
 
 func (e *DocEncryptor) Decrypt(doc *types.Document) error {
 	sharedSecret, err := e.kyber.DecapsulateSecret(doc.Ciphertext)
-	defer e.kyber.Clean()
 
 	if err != nil {
 		return fmt.Errorf("error decryption secret: %v", err)
@@ -100,4 +98,10 @@ func (e *DocEncryptor) Decrypt(doc *types.Document) error {
 
 func (e *DocEncryptor) GetKeyPair() *KeyPair {
 	return e.keyPair
+}
+
+func (e *DocEncryptor) Clean() {
+	if e.kyber != nil {
+		e.kyber.Clean()
+	}
 }
