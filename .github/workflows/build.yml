@@ -46,5 +46,11 @@ jobs:
           go install github.com/golang/protobuf/protoc-gen-go
           go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
-      - name: run make target
-        run: make all
+      - name: generate proto stubs
+        run: |
+          make proto
+          # let's verify just in case
+          ls -la proto/generated
+
+      - name: build client and server
+        run: make build
