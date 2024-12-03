@@ -8,6 +8,7 @@ service DocumentService {
   rpc UploadDocument(UploadRequest) returns (UploadResponse);
   rpc DownloadDocument(DownloadRequest) returns (DownloadResponse);
   rpc ListDocuments(Empty) returns (ListResponse);
+  rpc ViewDocument(ViewRequest) returns (ViewResponse);
 }
 
 message Empty {}
@@ -41,4 +42,13 @@ message DownloadResponse {
 
 message ListResponse {
   repeated DocumentMetadata documents = 1;
+}
+
+message ViewRequest {
+  string document_id = 1;
+}
+
+message ViewResponse {
+  DocumentMetadata metadata = 1;
+  bytes contents = 2;
 }

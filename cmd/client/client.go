@@ -6,6 +6,7 @@ import (
 	"github.com/ahhcash/gengar/internal/crypto"
 	"github.com/ahhcash/gengar/internal/types"
 	pb "github.com/ahhcash/gengar/proto/generated/proto"
+	"github.com/google/uuid"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"time"
@@ -117,4 +118,28 @@ func (c *DocumentClient) ListDocuments() ([]*types.DocumentMetadata, error) {
 	}
 
 	return metadata, nil
+}
+
+func (c *DocumentClient) ViewDocument(documentID string) (*types.Document, error) {
+	resp, err := c.client.ViewDocument(context.Background(), &pb.ViewRequest{
+		DocumentId: documentID,
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to download document: %v", err)
+	}
+
+	createdAt, _ := time.Parse(time.DateTime, resp.Metadata.CreatedAt)
+	updatedAt, _ := time.Parse(time.DateTime, resp.Metadata.UpdatedAt)
+
+	parsedId, _ := uuid.Parse(resp.Metadata.Id)
+	doc := &types.Document{
+		Id:        parsedId,
+		Content:   resp.Contents,
+		Name:      resp.Metadata.Name,
+		CreatedAt: createdAt,
+		UpdatedAt: updatedAt,
+	}
+
+	return doc, nil
 }

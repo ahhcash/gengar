@@ -79,6 +79,32 @@ func (s *DocumentServer) ListDocuments(context.Context, *pb.Empty) (*pb.ListResp
 	}, nil
 }
 
+func (s *DocumentServer) ViewDocument(ctx context.Context, req *pb.ViewRequest) (*pb.ViewResponse, error) {
+	docId, err := uuid.Parse(req.DocumentId)
+	if err != nil {
+		return nil, fmt.Errorf("error parsig document ID %s, %v", req.DocumentId, err)
+	}
+
+	doc, err := s.store.Get(docId)
+	if err != nil {
+		return nil, err
+	}
+
+	metadata := doc.GetMetadata()
+
+	response := &pb.ViewResponse{
+		Metadata: &pb.DocumentMetadata{
+			Id:        metadata.Id,
+			Name:      metadata.Name,
+			CreatedAt: metadata.CreatedAt,
+			UpdatedAt: metadata.UpdatedAt,
+		},
+		Contents: doc.Content,
+	}
+
+	return response, nil
+}
+
 func Run(port int) error {
 	documnetStore, err := NewDocumentStore()
 	if err != nil {
