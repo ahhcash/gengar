@@ -11,9 +11,10 @@ import (
 
 func printHelp() {
 	fmt.Println("\nAvailable commands:")
-	fmt.Println("⬆️  upload <filename>        - Upload a document")
-	fmt.Println("⬇️  download <id> <filename> - Download a document")
+	fmt.Println("⬆️ upload <filename>        - Upload a document")
+	fmt.Println("⬇️ download <id> <filename> - Download a document")
 	fmt.Println("📝 list                     - List all documents")
+	fmt.Println("🧐 view                     - View an encrypted document")
 	fmt.Println("🙏 help                     - Show this help message")
 	fmt.Println("👋 exit                     - Exit the program")
 }
@@ -107,6 +108,29 @@ func main() {
 				}
 				fmt.Println()
 			}
+
+		case "view":
+			if len(cmd) != 2 {
+				fmt.Println("Usage: view <id>")
+				fmt.Print("> ")
+				continue
+			}
+			docId := cmd[1]
+
+			doc, err := docClient.ViewDocument(docId)
+
+			if err != nil {
+				fmt.Printf("❌ Failed to view document: %v\n", err)
+				fmt.Print("> ")
+				continue
+			}
+			fmt.Printf("\n📄 Document Details:\n")
+			fmt.Printf("ID: %s\n", doc.Id)
+			fmt.Printf("Name: %s\n", doc.Name)
+			fmt.Printf("Created: %s\n", doc.CreatedAt)
+			fmt.Printf("Updated: %s\n", doc.UpdatedAt)
+			fmt.Printf("🔒 Encrypted Content:\n")
+			fmt.Printf("Hex: %X\n", doc.Content[:64])
 
 		case "help":
 			printHelp()

@@ -31,7 +31,7 @@
 8 directories, 13 files
 ```
 ### Overview.
-This project is a proof of concept for Kyber 768 encryption in a (simulated) cloud storage system that performs document storage and retrieval. The project is built using [OQS' Go port of Kyber](https://github.com/open-quantum-safe/liboqs-go) library and the [gRPC](https://grpc.io/) framework.
+This project is a proof of concept for Kyber 768 encryption in a (simulated) cloud storage system that performs document storage and retrieval. The project is built using [OQS' Go port of Kyber](https://github.com/open-quantum-safe/liboqs-go) and the [gRPC](https://grpc.io/) framework.
 
 ##### What is Kyber?
 

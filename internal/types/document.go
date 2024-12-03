@@ -25,7 +25,7 @@ func (d *Document) GetMetadata() *DocumentMetadata {
 	return &DocumentMetadata{
 		Id:        d.Id.String(),
 		Name:      d.Name,
-		CreatedAt: d.CreatedAt.String(),
-		UpdatedAt: d.UpdatedAt.String(),
+		CreatedAt: d.CreatedAt.Format(time.DateTime),
+		UpdatedAt: d.UpdatedAt.Format(time.DateTime),
 	}
 }
